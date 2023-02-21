@@ -15,9 +15,7 @@ tags:
 
 # Can Machine Learning make Lithium-ion Battery manufacturing more sustainable?
 
-**Section 1: Definition**
-
-**Project Overview**
+**High-Level Overview**
 
 Lithium-ion batteries are utilised widely due to their low and falling costs, high energy densities and long lifetimes. However, developing batteries with a long lifetime entails experimentation of many months to years due to delayed feedback on performance for different chemical compositions. Expensive lab equipment is used to test battery degradation by means of running many batteries through repeated charge and discharge cycles.
 
@@ -33,8 +31,6 @@ Accurate prediction of battery lifetime using early-cycle data would unlock new 
 
 This will reduce battery development costs and time as well as improving battery quality by enabling the testing of a wider variety of chemical compositions within the same budget and time.
 
-**Problem Statement**
-
 A low-carbon economy is essential in combating climate change which ranks in the top five priorities of most developed countries’ economic goals.
 
 The discovery and development of novel materials in the field of renewable energy are essential to accelerate the transition to a low-carbon economy.
@@ -45,88 +41,8 @@ Shorter research times and lower costs of renewable energy sources will result i
 
 This will be beneficial for a countries’ longer-term sustainability as well as increasing profits for renewable energy manufacturers.
 
-**Solution Statement**
 
-I will use ML/ AI in a twofold manner in this application:
-
--   Predicting overall battery lifetime during early charge/ discharge cycles (\<50 cycles) – therefore obviating the need to run experiments to full discharge status (approximately 2000 – 5000 cycles).
--   Identifying chemical compositions with a larger probability of resulting in compounds with longer battery life.
-
-The business objectives of:
-
--   shortening battery testing time and,
--   optimising the probability of finding chemical compounds with longer battery lifetime
-
-    are achieved.
-
-**Benchmark Model**
-
-I will build the model using Python, although many tools could be used e.g., SAS (in which I have more than a decade of experience), Matlab, Julia etc.
-
-The original model presented in the Nature article was built using Matlab. The original model was an Elastic Net ML model. I will use this model as a benchmark to compare my results against.
-
-I will build both a Convolutional Neural Network (CNN) and a Recurrent Neural Neural Network (RNN) using Tensorflow. I intend to use an LSTM RNN with an encoder/ decoder architecture – time permitting. My feeling is that an LSTM model is perfectly suited for this problem as the problem is in essence a time series problem, for which RNNs and their derivations are perfectly suited.
-
-**Evaluation Metrics**
-
-1.  Prediction of battery lifetime (more than predetermined threshold) during first 50 cycles of experiment with an accuracy exceeding 90%.
-2.  Reduction of individual battery experiment testing time by a factor of 10.
-3.  Automated selection of chemical compounds with an overall accuracy exceeding 80% as compared to human selection of compounds.
-4.  Reduction of chemical compound selection time for individual experiments by 50%.
-
-Baseline for 4 business metrics is:
-
-1.  Baseline accuracy for this type of model found in literature is \> 90%. We will start with a simple classifier (Logistic Regression) as a benchmark and then improve the methodology as we progress the project e.g., Convolutional Neural Networks or Elastic Nets.
-2.  A reduction in number of cycles by an order of magnitude is directly correlated with reduction in duration. A cycle reduction of an order of magnitude is feasible within existing literature. We will use existing testing times in laboratories as a baseline.
-3.  Literature suggests 80% accuracy is an achievable benchmark in this setting. We will start by utilising a simple optimisation algorithm and will progress to use Bayesian optimisation.
-4.  We will use existing chemical compound selection time in laboratories as a baseline.
-
-Overall accuracy and Precision are the main measures we are interested in. Sensitivity is less important as there are typically many good candidates, and we are more interested in reducing the False Positive Rate than optimising the True Positive Rate (Specificity)
-
-As mentioned, an accuracy and PPV of greater than 90% is required.
-
-**Project Design**
-
-The following diagram illustrates the MVP for the ML/ AI process:
-
-![Fig. 1](../../../images/battery_cycle_life/1ea60767211cd31297340605add984b1.png)
-
-The product will be designed for the following personas and epic level use cases:
-
-1.  A **battery technologist** performing battery experiments:
--   Analyses/ experimentation should provide increased value to our clients/project.
--   Technologist will work more efficiently by performing experiments faster and more accurately.
-1.  A **scientist or operator** writing experiment reports:
--   Will receive experiment reports from technologist much faster.
--   Reduced possibility of errors or mistakes
--   Will spend less time doing frustrating analysis.
--   Will focus on innovative aspects within the project.
--   Job will be more satisfying.
-1.  A **business director** selling batteries:
--   Will benefit from Increased revenues.
--   Projects will complete on time.
-
-The predictive model will be implemented in an integrated pipeline in the current experimental workflow as follows:
-
-![Diagram Description automatically generated](../../../images/battery_cycle_life/3f3c945f404c37270858a365079f26a9.png)
-
-Continued monitoring and ongoing improvement of the data and model code will be implemented.
-
--   The model will be operationalised using a CI/CD cloud framework which includes monitoring of data and model shift over time.
--   New code will automatically be pushed to operational systems via a 3-tier development/ staging and operational environment architecture.
--   A/B testing will be utilised to test changes in the development environment.
--   Data drift will be monitored during daily runs on the model via automated thresholds for all parameters to the models.
-
-We will also monitor bias in the model as part of operational deployment and maintenance of the model:
-
--   Improving data collection, continuing studies on new data sources
--   Continue to work with business to understand the problem domain better.
--   Continue to measure and monitor accuracy against real business outcomes.
--   Continue to update models and data based on abovementioned steps.
-
-**Section 2: Analysis**
-
-**Data Exploration**
+**Description of Input Data**
 
 There is a lot of data available on the Internet in this domain. I will use a dataset which consists of 124 commercial lithium-ion batteries cycled to failure under fast-charging conditions. This dataset can be found here: <https://data.matr.io/1/>.
 
@@ -174,7 +90,82 @@ The data could be stored in .pkl files in the original study (code to transform 
 
 We split the data into 3 datasets for training, testing (2x datasets) as per the original paper (Severson et al., 2019).
 
-**Exploratory Visualisation**
+**Strategy for solving the problem**
+
+I will use ML/ AI in a twofold manner in this application:
+
+-   Predicting overall battery lifetime during early charge/ discharge cycles (\<50 cycles) – therefore obviating the need to run experiments to full discharge status (approximately 2000 – 5000 cycles).
+-   Identifying chemical compositions with a larger probability of resulting in compounds with longer battery life.
+
+The business objectives of:
+
+-   shortening battery testing time and,
+-   optimising the probability of finding chemical compounds with longer battery lifetime are achieved.
+
+**Discussion of the expected solution**
+
+I will build the model using Python, although many tools could be used e.g., SAS (in which I have more than a decade of experience), Matlab, Julia etc.
+
+The original model presented in the Nature article was built using Matlab. The original model was an Elastic Net ML model. I will use this model as a benchmark to compare my results against.
+
+I will build both a Convolutional Neural Network (CNN) and a Recurrent Neural Neural Network (RNN) using Tensorflow. I intend to use an LSTM RNN with an encoder/ decoder architecture – time permitting. My feeling is that an LSTM model is perfectly suited for this problem as the problem is in essence a time series problem, for which RNNs and their derivations are perfectly suited.
+
+The following diagram illustrates the MVP for the ML/ AI process:
+
+![Fig. 1](../../../images/battery_cycle_life/1ea60767211cd31297340605add984b1.png)
+
+The product will be designed for the following personas and epic level use cases:
+
+1.  A **battery technologist** performing battery experiments:
+-   Analyses/ experimentation should provide increased value to our clients/project.
+-   Technologist will work more efficiently by performing experiments faster and more accurately.
+1.  A **scientist or operator** writing experiment reports:
+-   Will receive experiment reports from technologist much faster.
+-   Reduced possibility of errors or mistakes
+-   Will spend less time doing frustrating analysis.
+-   Will focus on innovative aspects within the project.
+-   Job will be more satisfying.
+1.  A **business director** selling batteries:
+-   Will benefit from Increased revenues.
+-   Projects will complete on time.
+
+The predictive model will be implemented in an integrated pipeline in the current experimental workflow as follows:
+
+![Diagram Description automatically generated](../../../images/battery_cycle_life/3f3c945f404c37270858a365079f26a9.png)
+
+Continued monitoring and ongoing improvement of the data and model code will be implemented.
+
+-   The model will be operationalised using a CI/CD cloud framework which includes monitoring of data and model shift over time.
+-   New code will automatically be pushed to operational systems via a 3-tier development/ staging and operational environment architecture.
+-   A/B testing will be utilised to test changes in the development environment.
+-   Data drift will be monitored during daily runs on the model via automated thresholds for all parameters to the models.
+
+We will also monitor bias in the model as part of operational deployment and maintenance of the model:
+
+-   Improving data collection, continuing studies on new data sources
+-   Continue to work with business to understand the problem domain better.
+-   Continue to measure and monitor accuracy against real business outcomes.
+-   Continue to update models and data based on abovementioned steps.
+
+**Metrics with justification**
+
+1.  Prediction of battery lifetime (more than predetermined threshold) during first 50 cycles of experiment with an accuracy exceeding 90%.
+2.  Reduction of individual battery experiment testing time by a factor of 10.
+3.  Automated selection of chemical compounds with an overall accuracy exceeding 80% as compared to human selection of compounds.
+4.  Reduction of chemical compound selection time for individual experiments by 50%.
+
+Baseline for 4 business metrics is:
+
+1.  Baseline accuracy for this type of model found in literature is \> 90%. We will start with a simple classifier (Logistic Regression) as a benchmark and then improve the methodology as we progress the project e.g., Convolutional Neural Networks or Elastic Nets.
+2.  A reduction in number of cycles by an order of magnitude is directly correlated with reduction in duration. A cycle reduction of an order of magnitude is feasible within existing literature. We will use existing testing times in laboratories as a baseline.
+3.  Literature suggests 80% accuracy is an achievable benchmark in this setting. We will start by utilising a simple optimisation algorithm and will progress to use Bayesian optimisation.
+4.  We will use existing chemical compound selection time in laboratories as a baseline.
+
+Overall accuracy and Precision are the main measures we are interested in. Sensitivity is less important as there are typically many good candidates, and we are more interested in reducing the False Positive Rate than optimising the True Positive Rate (Specificity)
+
+As mentioned, an accuracy and PPV of greater than 90% is required.
+
+**Exploratory Data Analysis**
 
 The code for exploring the data can be found here:
 
@@ -206,7 +197,7 @@ Using a simple Linear model, and these engineered features, the paper achieved t
 
 Which is not bad for a very simple model. The question is, can we improve on this?
 
-**Algorithms and Techniques**
+**Data Preprocessing**
 
 Our aim is to not perform any feature engineering on this problem, but to rather let the Deep Learning algorithm derive the features. We intend to use the raw data from the charge/ discharge cycles. None of this data were used in the previous models, as only the engineered features were entered into the model.
 
@@ -220,7 +211,22 @@ The code for this model can be found here:
 
 <https://github.com/LourensWalters/battery-cycle-life> (see Deep Learning Model.ipynb)
 
-**Benchmark**
+We applied the same data cleaning techniques as the original paper (Severson et al., 2019). We removed cycles that had time gaps, small outliers, or other inconsistencies.
+
+We also used the savitzky golay filter to filter out noise in measurements. This helped us recover some data samples that had measuring issues during the experiments – as per the original paper.
+
+Another problem in the data was time. The different charging policies meant that some cycles were finished quicker than others and the time measurements of charge and temperature couldn’t be compared as they were. We resampled the data in a similar fashion as the original paper did:
+
+Take the voltage range during discharging as the reference instead of time by doing the following:
+
+-   Use 3.6V and 2.0V as limits for fully charged and discharged.
+-   This range stays constant, even when time doesn’t.
+-   Interpolate charge and temperature over voltage.
+-   Resample charge and temperature at 1000 equidistant voltage steps.
+
+We used multiple consecutive charging cycles as a single unit of input to the Deep Learning model. As per RNN architecture we refer to these groups of cycles as windows. We defined one target for the whole window.
+
+**Modeling**
 
 Our benchmark is to improve on the results of the original paper:
 
@@ -230,7 +236,13 @@ We start by re-creating the same base models used in the paper i.e., the Elastic
 
 <https://github.com/LourensWalters/battery-cycle-life> (see Base Models.ipynb)
 
-Using these base models, we obtained the following results:
+**Hyperparameter Tuning**
+
+We tried various parameters and hyperparameters to obtain optimal values for the model. We experimented with various values for window size. We ended up with the size of 20 for our final model.
+
+**Comparison Table**
+
+Using the base models previously discussed, we obtained the following results:
 
 ![Graphical user interface, text, application Description automatically generated](../../../images/battery_cycle_life/291e5d23f8284b7ea2549d883a50f550.png)
 
@@ -254,30 +266,7 @@ Full Model – Secondary Test:
 
 ![Chart, scatter chart Description automatically generated](../../../images/battery_cycle_life/b08c58a36012d25b2fbf0c59c9e9835f.png)
 
-**Section 3: Methodology**
-
-**Data Preprocessing and Refinement**
-
-We applied the same data cleaning techniques as the original paper (Severson et al., 2019). We removed cycles that had time gaps, small outliers, or other inconsistencies.
-
-We also used the savitzky golay filter to filter out noise in measurements. This helped us recover some data samples that had measuring issues during the experiments – as per the original paper.
-
-Another problem in the data was time. The different charging policies meant that some cycles were finished quicker than others and the time measurements of charge and temperature couldn’t be compared as they were. We resampled the data in a similar fashion as the original paper did:
-
-Take the voltage range during discharging as the reference instead of time by doing the following:
-
--   Use 3.6V and 2.0V as limits for fully charged and discharged.
--   This range stays constant, even when time doesn’t.
--   Interpolate charge and temperature over voltage.
--   Resample charge and temperature at 1000 equidistant voltage steps.
-
-We used multiple consecutive charging cycles as a single unit of input to the Deep Learning model. As per RNN architecture we refer to these groups of cycles as windows. We defined one target for the whole window.
-
-We tried various parameters and hyperparameters to obtain optimal values for the model. We experimented with various values for window size. We ended up with the size of 20 for our final model.
-
-**Section 4: Results**
-
-**Justification**
+**Results**
 
 We ran the model for 500 epochs. There is a definite improvement in Loss as across epochs. We did not train the model any longer, but we believe there is room for further improvement.
 
@@ -295,13 +284,19 @@ RMSE_Life Cycle (train): 51
 
 RMSE_Life Cycle (validation): 214
 
+**Conclusion & Improvement**
+
 We can see that the Deep Learning model generalises better than the base model.
 
 The final model can be accessed here:
 
 <https://github.com/LourensWalters/battery-cycle-life> (see Deep Learning Model Backup.ipynb)
 
-**References**
+Although the Deep Learning model performs well it is substantially more complex than the ElasticNet used in the original paper. A model such as this will be difficult to maintain and deploy due costly resources used to train and run the model. The model does however not require domain specific knowledge to build and maintain. 
+
+Future work could be to better understand how the model generalises to other form factors of batteries, as well as other chemical compositions of batteries. It would be interesting to see how the Deep Learning model compares to the domain specific model in these instances. There might be a good use case for the model in these scenarios. 
+
+**Acknowledgement/ References**
 
 Hannes Knobloch, Adem Frenk, and W. C. (2019). *Predicting Battery Lifetime with CNNs*. Medium. https://towardsdatascience.com/predicting-battery-lifetime-with-cnns-c5e1faeecc8f
 
