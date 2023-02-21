@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Can Machine Learning assist with Coronory Artery Disease diagnosis?
+title: Test markdown
 description: .
 tags:
 - Logistic Function
