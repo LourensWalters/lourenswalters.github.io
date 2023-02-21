@@ -1,3 +1,18 @@
+---
+layout: post
+title: Can Machine Learning assist with Coronory Artery Disease diagnosis?
+description: .
+tags:
+- Logistic Function
+- Logistic Regression
+- Machine Learning
+- Cross-Entropy
+- Classification
+- Gradient Descent
+- Neural Networks
+- Notebook
+---
+
 |  Capstone Project Report Battery Cycle Life Prediction  | ![](media/f19525b74e1dd313eadbfd02767bbcf6.png) |
 |---------------------------------------------------------|-------------------------------------------------|
 
