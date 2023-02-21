@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Test markdown
+title: Can Machine Learning make Lithium-ion Battery manufacturing more sustainable?
 description: .
 tags:
 - Logistic Function
@@ -13,8 +13,7 @@ tags:
 - Notebook
 ---
 
-|  Capstone Project Report Battery Cycle Life Prediction  | ![](../../../images/battery_cycle_life/f19525b74e1dd313eadbfd02767bbcf6.png) |
-|---------------------------------------------------------|-------------------------------------------------|
+# Can Machine Learning make Lithium-ion Battery manufacturing more sustainable?
 
 **Section 1: Definition**
 
