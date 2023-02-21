@@ -13,10 +13,8 @@ tags:
 - Notebook
 ---
 
-|  Capstone Project Report Battery Cycle Life Prediction  | ![](media/f19525b74e1dd313eadbfd02767bbcf6.png) |
+|  Capstone Project Report Battery Cycle Life Prediction  | ![](../../../images/battery_cycle_life/f19525b74e1dd313eadbfd02767bbcf6.png) |
 |---------------------------------------------------------|-------------------------------------------------|
-
-*Lourens Walters*
 
 **Section 1: Definition**
 
@@ -24,11 +22,11 @@ tags:
 
 Lithium-ion batteries are utilised widely due to their low and falling costs, high energy densities and long lifetimes. However, developing batteries with a long lifetime entails experimentation of many months to years due to delayed feedback on performance for different chemical compositions. Expensive lab equipment is used to test battery degradation by means of running many batteries through repeated charge and discharge cycles.
 
-![A picture containing text, indoor, floor Description automatically generated](media/5d48014084233adda6c7a6894cb5ca18.png)
+![A picture containing text, indoor, floor Description automatically generated](../../../images/battery_cycle_life/5d48014084233adda6c7a6894cb5ca18.png)
 
 To improve research efficiency these experimental workbenches are reproduced many times to increase testing speed.
 
-![A picture containing microscope, worktable, toy Description automatically generated](media/41f149c7971ec03f94a02f6778e11662.png)
+![A picture containing microscope, worktable, toy Description automatically generated](../../../images/battery_cycle_life/41f149c7971ec03f94a02f6778e11662.png)
 
 This is however both expensive, and due to long charge/ recharge cycles still does not reduce testing times where many different chemical compositions must be tested in sequence.
 
@@ -92,7 +90,7 @@ As mentioned, an accuracy and PPV of greater than 90% is required.
 
 The following diagram illustrates the MVP for the ML/ AI process:
 
-![Fig. 1](media/1ea60767211cd31297340605add984b1.png)
+![Fig. 1](../../../images/battery_cycle_life/1ea60767211cd31297340605add984b1.png)
 
 The product will be designed for the following personas and epic level use cases:
 
@@ -111,7 +109,7 @@ The product will be designed for the following personas and epic level use cases
 
 The predictive model will be implemented in an integrated pipeline in the current experimental workflow as follows:
 
-![Diagram Description automatically generated](media/3f3c945f404c37270858a365079f26a9.png)
+![Diagram Description automatically generated](../../../images/battery_cycle_life/3f3c945f404c37270858a365079f26a9.png)
 
 Continued monitoring and ongoing improvement of the data and model code will be implemented.
 
@@ -173,7 +171,7 @@ The data is stored in hierarchical hash tables with the following structure (as 
 
 The data could be stored in .pkl files in the original study (code to transform from Matlab to .pkl was provided in published paper). We can see that the data for each cell is presented in a nested structure, with some features only measured once per cycle and others multiple times. Over a full cycle, we have more than a thousand measurements for capacity, temperature, voltage, and current, but only one scalar measurement for other metrics such as internal resistance of the cell or the total cycle time (Hannes Knobloch, Adem Frenk, 2019). The following diagram depicts this relationship.
 
-![Chart Description automatically generated](media/62f0c8c8fbee199fd5ba63ef626a0e8e.png)
+![Chart Description automatically generated](../../../images/battery_cycle_life/62f0c8c8fbee199fd5ba63ef626a0e8e.png)
 
 We split the data into 3 datasets for training, testing (2x datasets) as per the original paper (Severson et al., 2019).
 
@@ -185,27 +183,27 @@ The code for exploring the data can be found here:
 
 We use the training dataset of 46 cells for exploratory analysis. The response variable is “Life Cycle” and has the following distribution:
 
-![Chart, histogram Description automatically generated](media/0a90cbb4ad2f5a64c21948d049e584a0.png)
+![Chart, histogram Description automatically generated](../../../images/battery_cycle_life/0a90cbb4ad2f5a64c21948d049e584a0.png)
 
 A battery cell has a minimum cycle life of 534 and maximum of 1227 for this dataset. The data is fairly normally distributed with a slight skew to the right. The dataset is however very small, so it is difficult to infer population statistics from this sample. Mean cycle life is 844 and standard deviation is 184.
 
-![Chart, line chart Description automatically generated](media/59f6fd49a021e07caf9c83046c3de124.png)
+![Chart, line chart Description automatically generated](../../../images/battery_cycle_life/59f6fd49a021e07caf9c83046c3de124.png)
 
 Plotting the individual cycles for each cell with respect to discharge capacity yields the graph above. It is clear from this graph that different cells have very different discharge capacity characteristics. Plotting the Voltage against Discharge Capacity for each cycle for a specific cell yields the following graph:
 
-![A picture containing text Description automatically generated](media/08008c9623dd214bba0bf961fd529422.png)
+![A picture containing text Description automatically generated](../../../images/battery_cycle_life/08008c9623dd214bba0bf961fd529422.png)
 
 This is known as the discharge curve. It is this curve that was used by the original paper to feature engineer features used within the paper. The features were engineered by subtracting values of the 100th cycle from the 10th cycle. The following curve is obtained in this manner:
 
-![A picture containing diagram Description automatically generated](media/0eaef9b06b2a68c8ad078694323daf96.png)
+![A picture containing diagram Description automatically generated](../../../images/battery_cycle_life/0eaef9b06b2a68c8ad078694323daf96.png)
 
 The original paper found there is a linear relationship between this variable and the response variable i.e., Cycle Life. The following figure from the original paper illustrates this:
 
-![Chart Description automatically generated](media/6e6e2bfab9c4e2b42e358eba099ed20c.png)
+![Chart Description automatically generated](../../../images/battery_cycle_life/6e6e2bfab9c4e2b42e358eba099ed20c.png)
 
 Using a simple Linear model, and these engineered features, the paper achieved the following accuracy results:
 
-![Graphical user interface, text, application Description automatically generated](media/5d091b3cae20b4d335c03d275e64cada.png)
+![Graphical user interface, text, application Description automatically generated](../../../images/battery_cycle_life/5d091b3cae20b4d335c03d275e64cada.png)
 
 Which is not bad for a very simple model. The question is, can we improve on this?
 
@@ -217,7 +215,7 @@ We decided to build on the work by Knobloch et. al. (Hannes Knobloch, Adem Frenk
 
 The proposed model looks as follows:
 
-![Diagram Description automatically generated](media/f67d377d469e542a28215a61896d0491.png)
+![Diagram Description automatically generated](../../../images/battery_cycle_life/f67d377d469e542a28215a61896d0491.png)
 
 The code for this model can be found here:
 
@@ -227,7 +225,7 @@ The code for this model can be found here:
 
 Our benchmark is to improve on the results of the original paper:
 
-![Graphical user interface, text, application Description automatically generated](media/5d091b3cae20b4d335c03d275e64cada.png)
+![Graphical user interface, text, application Description automatically generated](../../../images/battery_cycle_life/5d091b3cae20b4d335c03d275e64cada.png)
 
 We start by re-creating the same base models used in the paper i.e., the ElasticNet. We also add a few base models of our own i.e., a Linear and Logistic Regression. Code for these base models can be found here:
 
@@ -235,27 +233,27 @@ We start by re-creating the same base models used in the paper i.e., the Elastic
 
 Using these base models, we obtained the following results:
 
-![Graphical user interface, text, application Description automatically generated](media/291e5d23f8284b7ea2549d883a50f550.png)
+![Graphical user interface, text, application Description automatically generated](../../../images/battery_cycle_life/291e5d23f8284b7ea2549d883a50f550.png)
 
 It can be observed that the results are fairly similar to the original paper. The Discharge Model does not perform well on the primary test dataset. We need to investigate this further, but am fairly certain that an outlying value could be causing the discrepancy. The following plot confirms this suspicion:
 
 Discharge Model – Primary Test:
 
-![Chart, scatter chart Description automatically generated](media/3e68040cb8e293f3f9099c78c5504ba9.png)
+![Chart, scatter chart Description automatically generated](../../../images/battery_cycle_life/3e68040cb8e293f3f9099c78c5504ba9.png)
 
 On the whole the results are however similar enough for us to continue our study, as the secondary tests confirm.
 
 Variance Model – Secondary Test:
 
-![Chart, scatter chart Description automatically generated](media/0566658de9c456ff85bbbc59be030f8e.png)
+![Chart, scatter chart Description automatically generated](../../../images/battery_cycle_life/0566658de9c456ff85bbbc59be030f8e.png)
 
 Discharge Model – Secondary Test:
 
-![Chart, scatter chart Description automatically generated](media/6d94a2e10f2ba3fcc60e2f912a6f6a6a.png)
+![Chart, scatter chart Description automatically generated](../../../images/battery_cycle_life/6d94a2e10f2ba3fcc60e2f912a6f6a6a.png)
 
 Full Model – Secondary Test:
 
-![Chart, scatter chart Description automatically generated](media/b08c58a36012d25b2fbf0c59c9e9835f.png)
+![Chart, scatter chart Description automatically generated](../../../images/battery_cycle_life/b08c58a36012d25b2fbf0c59c9e9835f.png)
 
 **Section 3: Methodology**
 
@@ -284,7 +282,7 @@ We tried various parameters and hyperparameters to obtain optimal values for the
 
 We ran the model for 500 epochs. There is a definite improvement in Loss as across epochs. We did not train the model any longer, but we believe there is room for further improvement.
 
-**![Chart, histogram Description automatically generated](media/eee0c989a768c955e5047b904f8f2e73.png)**
+**![Chart, histogram Description automatically generated](../../../images/battery_cycle_life/eee0c989a768c955e5047b904f8f2e73.png)**
 
 Model results in terms of RMSE are as follows:
 
