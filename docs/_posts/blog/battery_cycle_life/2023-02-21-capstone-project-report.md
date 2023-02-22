@@ -301,7 +301,7 @@ RMSE_Life Cycle (train): 51
 
 RMSE_Life Cycle (validation): 214
 
-**Conclusion **
+**Conclusion**
 
 We can see that the Deep Learning model generalises better than the base model.
 
