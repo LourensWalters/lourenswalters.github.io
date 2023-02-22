@@ -186,7 +186,7 @@ We therefore also used MAPE, which is more robust and affected as much by outlie
 
 The code for exploring the data can be found here:
 
-<https://github.com/LourensWalters/battery-cycle-life> (see Data Exploration.ipynb)
+<https://github.com/LourensWalters/lithium-ion-sustainability> (see src/notebooks/Data exploration.ipynb)
 
 We use the training dataset of 46 cells for exploratory analysis. The response variable is “Life Cycle” and has the following distribution:
 
@@ -226,7 +226,7 @@ The proposed model looks as follows:
 
 The code for this model can be found here:
 
-<https://github.com/LourensWalters/battery-cycle-life> (see Deep Learning Model.ipynb)
+<https://github.com/LourensWalters/lithium-ion-sustainability> (see src/notebooks/Deep Learning Model.ipynb)
 
 We applied the same data cleaning techniques as the original paper (Severson et al., 2019). We removed cycles that had time gaps, small outliers, or other inconsistencies.
 
@@ -251,7 +251,7 @@ Our benchmark is to improve on the results of the original paper:
 
 We start by re-creating the same base models used in the paper i.e., the ElasticNet. We also add a few base models of our own i.e., a Linear and Logistic Regression. Code for these base models can be found here:
 
-<https://github.com/LourensWalters/battery-cycle-life> (see Base Models.ipynb)
+<https://github.com/LourensWalters/lithium-ion-sustainability> (see src/notebooks/Base Models.ipynb)
 
 **Hyperparameter Tuning**
 
@@ -307,7 +307,7 @@ We can see that the Deep Learning model generalises better than the base model.
 
 The final model can be accessed here:
 
-<https://github.com/LourensWalters/battery-cycle-life> (see Deep Learning Model Backup.ipynb)
+<https://github.com/LourensWalters/lithium-ion-sustainability> (see src/notebooks/Deep Learning Model.ipynb)
 
 Although the Deep Learning model performs well it is substantially more complex than the ElasticNet used in the original paper. A model such as this will be difficult to maintain and deploy due costly resources used to train and run the model. The model does however not require domain specific knowledge to build and maintain. 
 
