@@ -316,6 +316,7 @@ The most interesting finding in this work was that the extremely simple Elastic 
 The amount of data preparation required to do this data analysis was astounding. Cleaning the data and recalibrating the time period over which samples were taken, took many weeks. This was by far the most demanding part of the project. 
 
 **Improvements**
+
 Future work could be to better understand: 
 
 * how the model generalises to other form factors of batteries, 
