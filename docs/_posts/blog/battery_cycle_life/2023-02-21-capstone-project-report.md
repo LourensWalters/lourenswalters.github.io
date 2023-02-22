@@ -97,7 +97,7 @@ I will use ML/ AI in a twofold manner in this application:
 -   Predicting overall battery lifetime during early charge/ discharge cycles (\<50 cycles) – therefore obviating the need to run experiments to full discharge status (approximately 2000 – 5000 cycles).
 -   Identifying chemical compositions with a larger probability of resulting in compounds with longer battery life.
 
-The business objectives of:
+The business objectives are:
 
 -   shortening battery testing time and,
 -   optimising the probability of finding chemical compounds with longer battery lifetime are achieved.
@@ -149,21 +149,38 @@ We will also monitor bias in the model as part of operational deployment and mai
 
 **Metrics with justification**
 
+The following business metrics need to be measured to ensure the project adds value regarding the business objectives:
+
 1.  Prediction of battery lifetime (more than predetermined threshold) during first 50 cycles of experiment with an accuracy exceeding 90%.
 2.  Reduction of individual battery experiment testing time by a factor of 10.
 3.  Automated selection of chemical compounds with an overall accuracy exceeding 80% as compared to human selection of compounds.
 4.  Reduction of chemical compound selection time for individual experiments by 50%.
 
-Baseline for 4 business metrics is:
+The baseline for the 4 business metrics is:
 
 1.  Baseline accuracy for this type of model found in literature is \> 90%. We will start with a simple classifier (Logistic Regression) as a benchmark and then improve the methodology as we progress the project e.g., Convolutional Neural Networks or Elastic Nets.
 2.  A reduction in number of cycles by an order of magnitude is directly correlated with reduction in duration. A cycle reduction of an order of magnitude is feasible within existing literature. We will use existing testing times in laboratories as a baseline.
 3.  Literature suggests 80% accuracy is an achievable benchmark in this setting. We will start by utilising a simple optimisation algorithm and will progress to use Bayesian optimisation.
 4.  We will use existing chemical compound selection time in laboratories as a baseline.
 
-Overall accuracy and Precision are the main measures we are interested in. Sensitivity is less important as there are typically many good candidates, and we are more interested in reducing the False Positive Rate than optimising the True Positive Rate (Specificity)
+Overall accuracy and Precision are the main measures we are interested in. They are defined as follows: 
+
+![Accuracy measures](../../../images/battery_cycle_life/accuracy_measures.png)
+
+Sensitivity is less important as there are typically many good candidates, and we are more interested in reducing the False Positive Rate than optimising the True Positive Rate (Specificity). 
 
 As mentioned, an accuracy and PPV of greater than 90% is required.
+
+Root Mean Squared Error (RMSE) and Average Absolute Percentage Error (MAPE) are chosen to evaluate model performance. They are defined as: 
+
+![Accuracy measures](../../../images/battery_cycle_life/rsquared.png)
+
+![Accuracy measures](../../../images/battery_cycle_life/mape.png)
+
+We chose RMSE as it is used in literature and it is a good basis for comparison. However, because it squares each prediction error, it tends to be overly sensitive to the prediction error for large values i.e. heavy tailed distributions or outliers (Winkelman & Mehmud, 2007). It can be greatly affected by a relatively small number of cases with very large prediction errors.
+
+We therefore also used MAPE, which is more robust and affected as much by outliers, as it penalises over-predictions severely. We used an alternative definition by Winkelman & Mehmud, which is defined for zero values (which vanilla MAPE is not) and it does not penalise over-predictions as severely as the original definition. This measure is better suited to the distribution of our data. 
+
 
 **Exploratory Data Analysis**
 
@@ -284,7 +301,7 @@ RMSE_Life Cycle (train): 51
 
 RMSE_Life Cycle (validation): 214
 
-**Conclusion & Improvement**
+**Conclusion **
 
 We can see that the Deep Learning model generalises better than the base model.
 
@@ -294,10 +311,25 @@ The final model can be accessed here:
 
 Although the Deep Learning model performs well it is substantially more complex than the ElasticNet used in the original paper. A model such as this will be difficult to maintain and deploy due costly resources used to train and run the model. The model does however not require domain specific knowledge to build and maintain. 
 
-Future work could be to better understand how the model generalises to other form factors of batteries, as well as other chemical compositions of batteries. It would be interesting to see how the Deep Learning model compares to the domain specific model in these instances. There might be a good use case for the model in these scenarios. 
+The most interesting finding in this work was that the extremely simple Elastic Net in the original paper managed to capture the signal in the data as well as the very complex RNN. The reason on investigation was the incredibly well-designed features the authors used. Their insight into the domain allowed them to engineer features by subtracting values of the 100th cycle from the 10th cycle, for which they obtained values with a linear relationship with the predictor. This again showed me that simpler models are in general better than more complex models that automate initial tasks, but are expensive and difficult to maintain due to lack of transparency. 
+
+The amount of data preparation required to do this data analysis was astounding. Cleaning the data and recalibrating the time period over which samples were taken, took many weeks. This was by far the most demanding part of the project. 
+
+**Improvements**
+Future work could be to better understand: 
+
+* how the model generalises to other form factors of batteries, 
+* as well as other chemical compositions of batteries. 
+ 
+It would be interesting to see how the Deep Learning model compares to the domain specific model in these instances. There might be a good use case for the RNN model in these scenarios, as it will take less time to adapt the RNN to other settings than the Elastic Net. 
+
+To improve the RNN one could try and incorporate some feature engineering insights from the Elastic Net model into the RNN architecture. Using Transformers and LSTMs might assist in this process. The combination of a Transformer and an LSTM could prove useful in particular, as I have had some success with this in other settings. 
 
 **Acknowledgement/ References**
 
-Hannes Knobloch, Adem Frenk, and W. C. (2019). *Predicting Battery Lifetime with CNNs*. Medium. https://towardsdatascience.com/predicting-battery-lifetime-with-cnns-c5e1faeecc8f
-
-Severson, K. A., Attia, P. M., Jin, N., Perkins, N., Jiang, B., Yang, Z., Chen, M. H., Aykol, M., Herring, P. K., Fraggedakis, D., Bazant, M. Z., Harris, S. J., Chueh, W. C., & Braatz, R. D. (2019). Data-driven prediction of battery cycle life before capacity degradation. *Nature Energy*, *4*(5), 383–391. https://doi.org/10.1038/s41560-019-0356-8
+* Hannes Knobloch, Adem Frenk, and W. C. (2019). *Predicting Battery Lifetime with CNNs*. Medium. https://towardsdatascience.com/predicting-battery-lifetime-with-cnns-c5e1faeecc8f
+* Severson, K. A., Attia, P. M., Jin, N., Perkins, N., Jiang, B., Yang, Z., Chen, M. H., Aykol, M., Herring, P. K., Fraggedakis, D., Bazant, M. Z., Harris, S. J., Chueh, W. C., & Braatz, R. D. (2019). Data-driven prediction of battery cycle life before capacity degradation. *Nature Energy*, *4*(5), 383–391. https://doi.org/10.1038/s41560-019-0356-8
+* R Winkelman & S Mehmud A Comparative Analysis of Claims-Based Tools for Health Risk Assessment (2007)
+* D Shapiro, B Childs & C Getz Targeting High-Cost Beneficiaries in the Medium Term with Predictive Modelling Presentation at ASSA Convention 2013
+* R Cumming, D Knutson, B Cameron, B Derrick A Comparative Analysis of Claims-based Methods of Health Risk Assessment for Commercial Populations (2002)
+* Peter L. Flom & David L. Cassell Stopping stepwise: Why stepwise and similar selection methods are bad, and what you should use (2007)
